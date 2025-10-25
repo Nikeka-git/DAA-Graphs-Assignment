@@ -3,29 +3,29 @@ package org.tsybus.struct;
 import java.util.*;
 
 public class Graph {
-    private Map<Vertex, List<Edge>> adjList = new HashMap<>();
+    private Map<String, List<Edge>> adjList = new HashMap<>();
 
 
-    public void addVertex(Vertex v){
+    public void addVertex(String v){
         adjList.putIfAbsent(v, new ArrayList<>());
     }
 
-    public void addEdge(Vertex from, Vertex to, int weight){
+    public void addEdge(String from, String to, int weight){
         addVertex(from);
         addVertex(to);
         adjList.get(from).add(new Edge(from, to, weight));
     }
 
-    public List<Edge> getEdges(Vertex v){
+    public List<Edge> getEdges(String v){
         return adjList.getOrDefault(v, new ArrayList<>());
     }
 
-    public Set<Vertex> getVertices(){
+    public Set<String> getVertices(){
         return adjList.keySet();
     }
 
-    public List<Vertex> getNeighbors(Vertex v) {
-        List<Vertex> neighbors = new ArrayList<>();
+    public List<String> getNeighbors(String v) {
+        List<String> neighbors = new ArrayList<>();
         for (Edge e : adjList.getOrDefault(v, new ArrayList<>())) {
             neighbors.add(e.getTo());
         }

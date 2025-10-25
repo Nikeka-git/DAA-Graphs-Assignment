@@ -1,20 +1,20 @@
 package org.tsybus.struct;
 
 public class Edge {
-    private Vertex from;
-    private Vertex to;
+    private String from;
+    private String to;
     private int weight;
 
-    public Edge(Vertex from, Vertex to, int weight){
+    public Edge(String from, String to, int weight){
         this.from = from;
         this.to = to;
         this.weight = weight;
     }
 
-    public Vertex getFrom(){
+    public String getFrom(){
         return from;
     }
-    public Vertex getTo(){
+    public String getTo(){
         return to;
     }
 
