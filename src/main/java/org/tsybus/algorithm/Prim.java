@@ -12,6 +12,7 @@ public class Prim implements Algorithm{
         Set<String> visited = new HashSet<>();
         PriorityQueue<Edge> pq = new PriorityQueue<>(Comparator.comparingInt(Edge::getWeight));
         List<Edge> mstEdges = new ArrayList<>();
+        OperationCounter ops = new OperationCounter();
         int totalCost = 0;
         String startVertex = graph.getVertices().iterator().next();
         visited.add(startVertex);
@@ -19,20 +20,26 @@ public class Prim implements Algorithm{
 
         while (!pq.isEmpty() && mstEdges.size() < graph.getVertices().size() - 1) {
             Edge e = pq.poll();
+            ops.incComparisons();
             String to = e.getTo();
-            if (visited.contains(to)) continue;
+            if (visited.contains(to)) {
+                ops.incOther();
+                continue;
+            }
 
             visited.add(to);
             mstEdges.add(e);
             totalCost += e.getWeight();
 
             for (Edge next : graph.getEdges(to)) {
+                ops.incOther();
                 if (!visited.contains(next.getTo())) pq.add(next);
             }
         }
         long end = System.currentTimeMillis();
 
         MSTResult result = new MSTResult();
+        result.setOps(ops);
         result.setAlgorithm("Prim");
         result.setEdges(mstEdges);
         result.setTotalCost(totalCost);

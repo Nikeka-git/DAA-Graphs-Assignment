@@ -14,6 +14,7 @@ public class Graph {
         addVertex(from);
         addVertex(to);
         adjList.get(from).add(new Edge(from, to, weight));
+        adjList.get(to).add(new Edge(to, from, weight));
     }
 
     public List<Edge> getEdges(String v){

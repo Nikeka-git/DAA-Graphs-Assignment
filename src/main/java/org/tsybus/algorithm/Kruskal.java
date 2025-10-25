@@ -3,6 +3,7 @@ package org.tsybus.algorithm;
 import org.tsybus.struct.Edge;
 import org.tsybus.struct.Graph;
 import org.tsybus.struct.MSTResult;
+import org.tsybus.struct.OperationCounter;
 
 import java.util.*;
 
@@ -11,7 +12,7 @@ public class Kruskal implements Algorithm {
     @Override
     public MSTResult computeMST(Graph graph) {
         long start = System.currentTimeMillis();
-
+        OperationCounter ops = new OperationCounter();
         List<Edge> allEdges = new ArrayList<>(graph.getAllEdges());
         allEdges.sort(Comparator.comparingInt(Edge::getWeight));
 
@@ -22,18 +23,23 @@ public class Kruskal implements Algorithm {
         int totalCost = 0;
 
         for (Edge e : allEdges) {
+            ops.incComparisons();
             String a = find(parent, e.getFrom());
             String b = find(parent, e.getTo());
             if (!a.equals(b)) {
+                ops.incUnions();
                 parent.put(a, b);
                 mstEdges.add(e);
                 totalCost += e.getWeight();
+            } else {
+                ops.incOther();
             }
         }
 
         long end = System.currentTimeMillis();
 
         MSTResult result = new MSTResult();
+        result.setOps(ops);
         result.setAlgorithm("Kruskal");
         result.setEdges(mstEdges);
         result.setTotalCost(totalCost);

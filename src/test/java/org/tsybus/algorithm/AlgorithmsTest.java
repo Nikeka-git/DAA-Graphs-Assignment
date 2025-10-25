@@ -24,8 +24,8 @@ public class AlgorithmsTest {
     void TestStubs() throws Exception {
         Graph g = buildSmallGraph();
 
-        Algorithm prim = new StubPrim();
-        Algorithm kruskal = new StubKruskal();
+        Algorithm prim = new Prim();
+        Algorithm kruskal = new Kruskal();
 
         MSTResult rPrim = prim.computeMST(g);
         MSTResult rKruskal = kruskal.computeMST(g);
