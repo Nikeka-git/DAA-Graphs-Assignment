@@ -24,6 +24,6 @@ public class StubPrim implements Algorithm {
 
     @Override
     public String name(){
-        return "StubKruskal";
+        return "StubPrim";
     }
 }

@@ -31,4 +31,12 @@ public class Graph {
         }
         return neighbors;
     }
+
+    public List<Edge> getAllEdges() {
+        List<Edge> edges = new ArrayList<>();
+        for (List<Edge> list : adjList.values()) {
+            edges.addAll(list);
+        }
+        return edges;
+    }
 }
