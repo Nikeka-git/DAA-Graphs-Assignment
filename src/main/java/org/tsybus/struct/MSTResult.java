@@ -10,7 +10,7 @@ public class MSTResult {
     private int edgeCount;
     private long totalCost;
     private OperationCounter ops;
-    private long timeMs;
+    private double timeMs;
 
     public MSTResult() {}
 
@@ -47,7 +47,7 @@ public class MSTResult {
     public OperationCounter getOps() { return ops; }
     public void setOps(OperationCounter ops) { this.ops = ops; }
 
-    public long getTimeMs() { return timeMs; }
-    public void setTimeMs(long timeMs) { this.timeMs = timeMs; }
+    public double getTimeMs() { return timeMs; }
+    public void setTimeMs(double timeMs) { this.timeMs = timeMs; }
 
 }

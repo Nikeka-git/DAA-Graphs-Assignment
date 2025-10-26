@@ -7,7 +7,7 @@ public class Prim implements Algorithm{
 
     @Override
     public MSTResult computeMST(Graph graph) {
-        long start = System.currentTimeMillis();
+        long start = System.nanoTime();
 
         Set<String> visited = new HashSet<>();
         PriorityQueue<Edge> pq = new PriorityQueue<>(Comparator.comparingInt(Edge::getWeight));
@@ -36,14 +36,14 @@ public class Prim implements Algorithm{
                 if (!visited.contains(next.getTo())) pq.add(next);
             }
         }
-        long end = System.currentTimeMillis();
+        long end = System.nanoTime();
 
         MSTResult result = new MSTResult();
         result.setOps(ops);
         result.setAlgorithm("Prim");
         result.setEdges(mstEdges);
         result.setTotalCost(totalCost);
-        result.setTimeMs(end - start);
+        result.setTimeMs((end - start) / 1_000_000.0);
         result.setVertexCount(graph.getVertices().size());
         result.setEdgeCount(graph.getAllEdges().size());
         return result;

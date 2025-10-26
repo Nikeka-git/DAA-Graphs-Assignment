@@ -11,7 +11,7 @@ public class Kruskal implements Algorithm {
 
     @Override
     public MSTResult computeMST(Graph graph) {
-        long start = System.currentTimeMillis();
+        long start = System.nanoTime();
         OperationCounter ops = new OperationCounter();
         List<Edge> allEdges = new ArrayList<>(graph.getAllEdges());
         allEdges.sort(Comparator.comparingInt(Edge::getWeight));
@@ -36,14 +36,14 @@ public class Kruskal implements Algorithm {
             }
         }
 
-        long end = System.currentTimeMillis();
+        long end = System.nanoTime();
 
         MSTResult result = new MSTResult();
         result.setOps(ops);
         result.setAlgorithm("Kruskal");
         result.setEdges(mstEdges);
         result.setTotalCost(totalCost);
-        result.setTimeMs(end - start);
+        result.setTimeMs((end - start) / 1_000_000.0);
         result.setVertexCount(graph.getVertices().size());
         result.setEdgeCount(graph.getAllEdges().size());
         return result;

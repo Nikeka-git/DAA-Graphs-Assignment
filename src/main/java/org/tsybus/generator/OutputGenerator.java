@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.tsybus.algorithm.*;
 import org.tsybus.struct.*;
+import org.tsybus.generator.CSVExporter;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,7 @@ public class OutputGenerator {
         List<Map<String, Object>> graphs = (List<Map<String, Object>>) input.get("graphs");
 
         ArrayNode resultsArray = mapper.createArrayNode();
+        List<MSTResult> allResults = new ArrayList<>();
         int processed = 0;
 
         for (Map<String, Object> gData : graphs) {
@@ -35,6 +38,16 @@ public class OutputGenerator {
             Kruskal kruskal = new Kruskal();
             MSTResult rPrim = prim.computeMST(g);
             MSTResult rKruskal = kruskal.computeMST(g);
+
+            rPrim.setAlgorithm("Prim");
+            rPrim.setVertexCount(g.getVertices().size());
+            rPrim.setEdgeCount(g.getAllEdges().size());
+            rKruskal.setAlgorithm("Kruskal");
+            rKruskal.setVertexCount(g.getVertices().size());
+            rKruskal.setEdgeCount(g.getAllEdges().size());
+
+            allResults.add(rPrim);
+            allResults.add(rKruskal);
 
             ObjectNode resultNode = mapper.createObjectNode();
             resultNode.put("graph_id", id);
@@ -55,7 +68,9 @@ public class OutputGenerator {
         root.set("results", resultsArray);
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File("output.json"), root);
 
-        System.out.println("output.json successfully created.");
+        CSVExporter.writeResultsToCSV("results.csv", allResults);
+
+        System.out.println("output.json and results.csv successfully created.");
     }
 
     private static ObjectNode makeAlgoNode(ObjectMapper mapper, MSTResult result) {
