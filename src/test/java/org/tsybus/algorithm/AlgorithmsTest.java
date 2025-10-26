@@ -41,7 +41,7 @@ public class AlgorithmsTest {
             if (out.toFile().length() == 0) {
                 pw.println("dataset,algorithm,totalCost,timeMs,comparisons,unions,other");
             }
-            pw.printf("small1,%s,%d,%d,%d,%d,%d%n",
+            pw.printf("small1,%s,%d,%.2f,%d,%d,%d%n",
                     prim.name(),
                     rPrim.getTotalCost(),
                     rPrim.getTimeMs(),
@@ -49,7 +49,7 @@ public class AlgorithmsTest {
                     rPrim.getOps() != null ? rPrim.getOps().getUnions() : 0,
                     rPrim.getOps() != null ? rPrim.getOps().getOther() : 0
             );
-            pw.printf("small1,%s,%d,%d,%d,%d,%d%n",
+            pw.printf("small1,%s,%d,%.2f,%d,%d,%d%n",
                     kruskal.name(),
                     rKruskal.getTotalCost(),
                     rKruskal.getTimeMs(),
@@ -61,8 +61,8 @@ public class AlgorithmsTest {
 
         Path jsonOut = Path.of("target/test-results/metrics.json");
         String json = String.format(
-                "[{\"dataset\":\"small1\",\"algorithm\":\"%s\",\"totalCost\":%d,\"timeMs\":%d}," +
-                        "{\"dataset\":\"small1\",\"algorithm\":\"%s\",\"totalCost\":%d,\"timeMs\":%d}]",
+                "[{\"dataset\":\"small1\",\"algorithm\":\"%s\",\"totalCost\":%d,\"timeMs\":%.2f}," +
+                        "{\"dataset\":\"small1\",\"algorithm\":\"%s\",\"totalCost\":%d,\"timeMs\":%.2f}]",
                 prim.name(), rPrim.getTotalCost(), rPrim.getTimeMs(),
                 kruskal.name(), rKruskal.getTotalCost(), rKruskal.getTimeMs()
         );
